@@ -1,6 +1,8 @@
+import 'dart:developer';
 
 import 'package:arbiter_examinator/presentation/screens/home_screen.dart';
 import 'package:arbiter_examinator/provider/auth_provider.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,8 +19,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final Map<String, String> _flags = {
     "English": "🇬🇧",
+    "Русский": "🇷🇺",
     "Uzbek": "🇺🇿",
-    "Turkish": "🇹🇷",
+  };
+
+  final Map<String, String> _languages = {
+    "Uzbek": "uz",
+    "Русский": "ru",
+    "English": "en",
   };
 
   @override
@@ -61,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     DropdownButtonFormField<String>(
                       value: _selectedLanguage,
                       decoration: InputDecoration(
-                        labelText: "Select Language",
+                        labelText: "select_lang".tr(),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
@@ -81,6 +89,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       onChanged: (String? newValue) {
                         setState(() {
                           _selectedLanguage = newValue;
+                          // log(.toString());
+                          Locale newLocale = Locale(_languages[newValue]!);
+                          context.setLocale(newLocale);
                         });
                       },
                     ),
@@ -90,8 +101,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         return ElevatedButton(
                           onPressed: _selectedLanguage != null &&
                                   _controller.text.isNotEmpty
-                              ? () async{
-                                await  authProvider.login(
+                              ? () async {
+                                  await authProvider.login(
                                       candidate_number:
                                           _controller.text.trim());
                                   if (authProvider.message
