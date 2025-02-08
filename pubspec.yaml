@@ -41,6 +41,8 @@ dependencies:
   json_annotation: ^4.9.0
   dartz: ^0.10.1
   easy_localization: ^3.0.7+1
+  flutter_screenutil: ^5.9.3
+  slide_countdown: ^2.0.2
 
 dev_dependencies:
   flutter_test:
